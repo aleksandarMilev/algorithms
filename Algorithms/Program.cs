@@ -1,3 +1,4 @@
 ﻿using Algorithms;
+using static System.Console;
 
-Solution.IsPowerOfFour(16);
+WriteLine(Solution.RomanToInt("MCMXCIV"));
