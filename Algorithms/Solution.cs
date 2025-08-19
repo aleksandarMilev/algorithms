@@ -1,7 +1,5 @@
 ﻿namespace Algorithms;
 
-using System.Text;
-
 public static class Solution
 {
     public static bool IsPowerOfFour(int num)
@@ -47,22 +45,86 @@ public static class Solution
         return num == reversedHalf || num == reversedHalf / 10;
     }
 
-    public static int RomanToInt(string romanian)
+    public static int RomanToInt(string roman)
     {
-        var romanianToArabicMap = new Dictionary<string, int>
+        var romanToArabicMap = new Dictionary<char, int>()
         {
-            { "I", 1 },
-            { "V", 5 },
-            { "X", 10 },
-            { "L", 50 },
-            { "C", 100 },
-            { "D", 500 },
-            { "M", 1_000 },
+            { 'I', 1 },
+            { 'V', 5 },
+            { 'X', 10 },
+            { 'L', 50 },
+            { 'C', 100 },
+            { 'D', 500 },
+            { 'M', 1000 },
         };
 
-        var result = new StringBuilder();
+        var arabic = 0;
 
+        for (var i = 0; i < roman.Length - 1; i++)
+        {
+            var current = roman[i];
+            var next = roman[i + 1];
 
-        return int.Parse(result.ToString());
+            if (romanToArabicMap[current] >= romanToArabicMap[next]) arabic += romanToArabicMap[current];
+            else arabic -= romanToArabicMap[current];
+        }
+
+        var last = roman[^1];
+        arabic += romanToArabicMap[last];
+
+        return arabic;
+    }
+
+    public static string LongestCommonPrefix(string[] strs)
+    {
+        if (strs.Length == 0) return string.Empty;
+        if (strs.All(string.IsNullOrWhiteSpace)) return string.Empty;
+        if (strs.Length == 1) return strs[0];
+
+        var shortest = strs.MinBy(s => s.Length)!;
+
+        for (var i = 0; i < shortest.Length; i++)
+        {
+            var currentPrefixes = strs.Select(s => s[i]).ToHashSet();
+            if (currentPrefixes.Count > 1) return shortest[..i];
+        }
+
+        return shortest;
+    }
+
+    public static bool IsValid(string parentheses)
+    {
+        if (parentheses.Length < 2) return false;
+
+        var openingToClosed = new Dictionary<char, char>()
+        {
+            { '{', '}' },
+            { '[', ']'},
+            { '(', ')' }
+        };
+
+        var stack = new Stack<char>();
+
+        for (var i = 0; i < parentheses.Length; i++)
+        {
+            var current = parentheses[i];
+
+            if (openingToClosed.ContainsKey(parentheses[i])) 
+                stack.Push(current);
+            else
+            {
+                if (stack.Count == 0) 
+                    return false;
+                else
+                {
+                    var last = stack.Pop();
+                    if (openingToClosed[last] != current)
+                        return false;
+                }
+
+            }
+        }
+
+        return stack.Count == 0;
     }
 }
