@@ -22,4 +22,4 @@ def solve(nums, target):
     raise ValueError('Solution does not exist with the given input!')
 
 if __name__ == "__main__":
-    print(solve([2, 7, 11, 15], 9))  # Expected output: [0, 1]
+    print(solve([2, 7, 11, 15], 9))  # Expected: [0, 1]
