@@ -27,7 +27,7 @@ def print_list(node):
 
 def solve(l1, l2):
     """
-    02. Add Two Numbers
+    Add Two Numbers
     -------------------
     You are given two non-empty linked lists representing two non-negative integers.
     The digits are stored in reverse order, and each node contains a single digit.
